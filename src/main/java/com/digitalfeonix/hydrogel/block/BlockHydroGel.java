@@ -63,7 +63,4 @@ public class BlockHydroGel extends BlockBasic {
 		return EnumPushReaction.NORMAL;
 	}
 
-	public static void hiDad() {
-	}
-
 }

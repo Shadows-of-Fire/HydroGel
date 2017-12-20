@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "1.12.2-1.0.0"
 group= "com.digitalfeonix.hydrogel"
-archivesBaseName = "Hydrogel"
+archivesBaseName = "HydroGel"
 
 sourceCompatibility = targetCompatibility = "1.8"
 compileJava {

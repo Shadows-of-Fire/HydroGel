@@ -1,33 +1,27 @@
 package com.digitalfeonix.hydrogel.proxy;
 
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.item.Item;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import com.digitalfeonix.hydrogel.HydroGel;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import shadows.placebo.client.IHasModel;
 
 public class ClientProxy extends CommonProxy {
 
-    @Override
-    public void registerItemRenderer(Item item, int meta, String id) {
-        ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(HydroGel.MODID + ":" + id, "inventory"));
-    }
+	@Override
+	public void preInit(FMLPreInitializationEvent event) {
+		MinecraftForge.EVENT_BUS.register(this);
+	}
 
-    @Override
-    public void preInit(FMLPreInitializationEvent event) {
-
-    }
-
-    @Override
-    public void init(FMLInitializationEvent event) {
-
-    }
-
-    @Override
-    public void postInit(FMLPostInitializationEvent event) {
-
-    }
+	@SubscribeEvent
+	public void onModelRegister(ModelRegistryEvent e) {
+		for (Block b : HydroGel.INFO.getBlockList())
+			if (b instanceof IHasModel) ((IHasModel) b).initModels(e);
+		for (Item i : HydroGel.INFO.getItemList())
+			if (i instanceof IHasModel) ((IHasModel) i).initModels(e);
+	}
 }

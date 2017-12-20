@@ -1,64 +1,69 @@
 package com.digitalfeonix.hydrogel.block;
 
+import com.digitalfeonix.hydrogel.HydroGel;
+
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fluids.BlockFluidClassic;
+import shadows.placebo.block.base.BlockBasic;
 
-public class BlockHydroGel extends BlockBase {
+public class BlockHydroGel extends BlockBasic {
+	
+	public static final PropertyInteger LEVEL = BlockFluidClassic.LEVEL;
+	
+	public BlockHydroGel() {
+		super("hydrogel", Material.WATER, 1F, 1F, HydroGel.INFO);
+		setSoundType(SoundType.SLIME);
+		setDefaultState(this.blockState.getBaseState().withProperty(LEVEL, 7));
+	}
 
-    public static final PropertyInteger LEVEL = PropertyInteger.create("level", 0, 15);
-    private final Integer lvl = 7;
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, LEVEL);
+	}
 
-    public BlockHydroGel(String name) {
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return this.getDefaultState().withProperty(LEVEL, 7);
+	}
 
-        // this is what allows the hydration to happen
-        super(Material.WATER, name);
-        // don't make instant harvest
-        this.setHardness(1.0f);
-        this.blockSoundType = SoundType.SLIME;
-        this.setDefaultState(this.blockState.getBaseState().withProperty(LEVEL, lvl));
-    }
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return 0;
+	}
 
-    protected BlockStateContainer createBlockState()
-    {
-        return new BlockStateContainer(this, new IProperty[] {LEVEL});
-    }
+	@Override
+	public boolean isReplaceable(IBlockAccess worldIn, BlockPos pos) {
+		return false;
+	}
 
-    public IBlockState getStateFromMeta(int meta)
-    {
-        return this.getDefaultState().withProperty(LEVEL, lvl);
-    }
+	@Override
+	public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+		return true;
+	}
+	
+	@Override
+	public boolean isFullCube(IBlockState state) {
+		return true;
+	}
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return true;
+	}
 
-    public int getMetaFromState(IBlockState state)
-    {
-        return lvl;
-    }
+	@Override
+	public EnumPushReaction getMobilityFlag(IBlockState state) {
+		return EnumPushReaction.NORMAL;
+	}
 
-    // prevent blocks from being place where this block is (it supposed to be solid)
-    @Override
-    public boolean isReplaceable(IBlockAccess worldIn, BlockPos pos)
-    {
-        return false;
-    }
-
-    // allow things like torches and stuff to be put on it
-    @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
-    {
-        return true;
-    }
-
-    // allow the block to be moved by pistons like it is a piece of dirt
-    @Override
-    public EnumPushReaction getMobilityFlag(IBlockState state)
-    {
-        return EnumPushReaction.NORMAL;
-    }
+	public static void hiDad() {
+	}
 
 }

@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import shadows.placebo.registry.RegistryInformation;
 import shadows.placebo.util.RecipeHelper;
 
-@Mod(modid = HydroGel.MODID, version = HydroGel.VERSION, name = HydroGel.MODNAME, dependencies = "required-after:placebo@[1.1.2,)")
+@Mod(modid = HydroGel.MODID, version = HydroGel.VERSION, name = HydroGel.MODNAME, dependencies = "required-after:placebo@[1.2.0,)")
 public class HydroGel {
 	public static final String MODID = "hydrogel";
 	public static final String MODNAME = "HydroGel";

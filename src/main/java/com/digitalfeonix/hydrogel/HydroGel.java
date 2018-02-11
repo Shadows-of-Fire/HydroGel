@@ -16,7 +16,7 @@ import shadows.placebo.util.RecipeHelper;
 public class HydroGel {
 	public static final String MODID = "hydrogel";
 	public static final String MODNAME = "HydroGel";
-	public static final String VERSION = "1.0.0";
+	public static final String VERSION = "1.1.0";
 
 	@SidedProxy(serverSide = "com.digitalfeonix.hydrogel.proxy.CommonProxy", clientSide = "com.digitalfeonix.hydrogel.proxy.ClientProxy")
 	public static CommonProxy proxy;

@@ -59,7 +59,7 @@ public class BlockHydroGel extends BlockBasic {
 	}
 
 	@Override
-	public EnumPushReaction getMobilityFlag(IBlockState state) {
+	public EnumPushReaction getPushReaction(IBlockState state) {
 		return EnumPushReaction.NORMAL;
 	}
 

@@ -28,7 +28,7 @@ public class HwylaSux implements IWailaPlugin {
 		
 		@Override
 		public List<String> getWailaBody(ItemStack stack, List<String> tip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-			tip.add(TextFormatting.WHITE + Placebo.PROXY.translate(ModRegistry.HYDROGEL.getUnlocalizedName() + ".name"));
+			tip.add(TextFormatting.WHITE + Placebo.PROXY.translate(ModRegistry.HYDROGEL.getTranslationKey() + ".name"));
 			tip.add(TextFormatting.BLUE + TextFormatting.ITALIC.toString() + HydroGel.MODNAME);
 			return tip;
 		}

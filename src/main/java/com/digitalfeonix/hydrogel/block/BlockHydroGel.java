@@ -1,25 +1,25 @@
 package com.digitalfeonix.hydrogel.block;
 
-import com.digitalfeonix.hydrogel.HydroGel;
-
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fluids.BlockFluidClassic;
-import shadows.placebo.block.BlockBasic;
 
-public class BlockHydroGel extends BlockBasic {
-	
+public class BlockHydroGel extends Block {
+
 	public static final PropertyInteger LEVEL = BlockFluidClassic.LEVEL;
-	
+
 	public BlockHydroGel() {
-		super("hydrogel", Material.WATER, 1F, 1F, HydroGel.INFO);
+		super(Material.WATER);
 		setSoundType(SoundType.SLIME);
+		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 		setDefaultState(this.blockState.getBaseState().withProperty(LEVEL, 7));
 	}
 
@@ -47,12 +47,12 @@ public class BlockHydroGel extends BlockBasic {
 	public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
 		return true;
 	}
-	
+
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return true;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return true;

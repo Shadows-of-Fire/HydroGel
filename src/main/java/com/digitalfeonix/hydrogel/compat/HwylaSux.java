@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.digitalfeonix.hydrogel.HydroGel;
 import com.digitalfeonix.hydrogel.block.BlockHydroGel;
+import com.digitalfeonix.hydrogel.init.ModRegistry;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -22,12 +23,12 @@ public class HwylaSux implements IWailaPlugin {
 	public void register(IWailaRegistrar reg) {
 		reg.registerBodyProvider(new Provider(), BlockHydroGel.class);
 	}
-
+	
 	private static class Provider implements IWailaDataProvider {
-
+		
 		@Override
 		public List<String> getWailaBody(ItemStack stack, List<String> tip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-			tip.add(TextFormatting.WHITE + Placebo.PROXY.translate(HydroGel.HYDROGEL.getTranslationKey() + ".name"));
+			tip.add(TextFormatting.WHITE + Placebo.PROXY.translate(ModRegistry.HYDROGEL.getTranslationKey() + ".name"));
 			tip.add(TextFormatting.BLUE + TextFormatting.ITALIC.toString() + HydroGel.MODNAME);
 			return tip;
 		}

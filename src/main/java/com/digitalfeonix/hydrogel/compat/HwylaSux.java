@@ -3,34 +3,32 @@ package com.digitalfeonix.hydrogel.compat;
 import java.util.List;
 
 import com.digitalfeonix.hydrogel.HydroGel;
-import com.digitalfeonix.hydrogel.block.BlockHydroGel;
-import com.digitalfeonix.hydrogel.init.ModRegistry;
+import com.digitalfeonix.hydrogel.block.HydroGelBlock;
 
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.IComponentProvider;
+import mcp.mobius.waila.api.IDataAccessor;
+import mcp.mobius.waila.api.IPluginConfig;
+import mcp.mobius.waila.api.IRegistrar;
 import mcp.mobius.waila.api.IWailaPlugin;
-import mcp.mobius.waila.api.IWailaRegistrar;
+import mcp.mobius.waila.api.TooltipPosition;
 import mcp.mobius.waila.api.WailaPlugin;
-import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
-import shadows.placebo.Placebo;
+import net.minecraft.util.text.TranslationTextComponent;
 
 @WailaPlugin
 public class HwylaSux implements IWailaPlugin {
 
 	@Override
-	public void register(IWailaRegistrar reg) {
-		reg.registerBodyProvider(new Provider(), BlockHydroGel.class);
+	public void register(IRegistrar reg) {
+		reg.registerComponentProvider(new Provider(), TooltipPosition.HEAD, HydroGelBlock.class);
 	}
-	
-	private static class Provider implements IWailaDataProvider {
-		
+
+	private static class Provider implements IComponentProvider {
+
 		@Override
-		public List<String> getWailaBody(ItemStack stack, List<String> tip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-			tip.add(TextFormatting.WHITE + Placebo.PROXY.translate(ModRegistry.HYDROGEL.getTranslationKey() + ".name"));
-			tip.add(TextFormatting.BLUE + TextFormatting.ITALIC.toString() + HydroGel.MODNAME);
-			return tip;
+		public void appendHead(List<ITextComponent> tip, IDataAccessor accessor, IPluginConfig config) {
+			tip.add(new TranslationTextComponent(HydroGel.HYDROGEL.getTranslationKey()).formatted(TextFormatting.WHITE));
 		}
 	}
 

@@ -1,32 +1,53 @@
 package com.digitalfeonix.hydrogel;
 
-import com.digitalfeonix.hydrogel.init.ModRegistry;
-import com.digitalfeonix.hydrogel.proxy.CommonProxy;
+import com.digitalfeonix.hydrogel.block.HydroGelBlock;
 
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Items;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import shadows.placebo.registry.RegistryInformation;
-import shadows.placebo.util.RecipeHelper;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ObjectHolder;
+import shadows.placebo.recipe.RecipeHelper;
 
-@Mod(modid = HydroGel.MODID, version = HydroGel.VERSION, name = HydroGel.MODNAME, dependencies = "required-after:placebo@[1.2.0,)")
+@Mod(HydroGel.MODID)
 public class HydroGel {
+
 	public static final String MODID = "hydrogel";
-	public static final String MODNAME = "HydroGel";
-	public static final String VERSION = "1.1.0";
 
-	@SidedProxy(serverSide = "com.digitalfeonix.hydrogel.proxy.CommonProxy", clientSide = "com.digitalfeonix.hydrogel.proxy.ClientProxy")
-	public static CommonProxy proxy;
+	@ObjectHolder("hydrogel:hydrogel")
+	public static final Block HYDROGEL = null;
 
-	public static final RegistryInformation INFO = new RegistryInformation(MODID, CreativeTabs.BUILDING_BLOCKS);
-	public static final RecipeHelper HELPER = new RecipeHelper(MODID, MODNAME, INFO.getRecipeList());
+	public HydroGel() {
+		FMLJavaModLoadingContext.get().getModEventBus().register(this);
+		MinecraftForge.EVENT_BUS.addListener(this::onBucketUse);
+	}
 
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent e) {
-		MinecraftForge.EVENT_BUS.register(new ModRegistry());
-		proxy.preInit(e);
+	@SubscribeEvent
+	public void registerBlocks(Register<Block> e) {
+		e.getRegistry().register(new HydroGelBlock().setRegistryName("hydrogel"));
+	}
+
+	@SubscribeEvent
+	public void registerItem(Register<Item> e) {
+		e.getRegistry().register(new BlockItem(HYDROGEL, new Item.Properties().group(ItemGroup.DECORATIONS)).setRegistryName("hydrogel"));
+	}
+
+	public void onBucketUse(FillBucketEvent event) {
+		if (event.getTarget() instanceof BlockRayTraceResult && event.getWorld().getBlockState(((BlockRayTraceResult) event.getTarget()).getPos()).getBlock() == HYDROGEL) event.setCanceled(true);
+	}
+
+	@SubscribeEvent
+	public void setup(FMLCommonSetupEvent e) {
+		new RecipeHelper(MODID).addShaped(HYDROGEL, 3, 3, Blocks.IRON_BARS, Items.SLIME_BALL, Blocks.IRON_BARS, Items.SLIME_BALL, Items.WATER_BUCKET, Items.SLIME_BALL, Blocks.IRON_BARS, Items.SLIME_BALL, Blocks.IRON_BARS);
 	}
 }

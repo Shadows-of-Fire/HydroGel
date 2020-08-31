@@ -28,7 +28,7 @@ public class HwylaSux implements IWailaPlugin {
 
 		@Override
 		public void appendHead(List<ITextComponent> tip, IDataAccessor accessor, IPluginConfig config) {
-			tip.add(new TranslationTextComponent(HydroGel.HYDROGEL.getTranslationKey()).formatted(TextFormatting.WHITE));
+			tip.add(new TranslationTextComponent(HydroGel.HYDROGEL.getTranslationKey()).mergeStyle(TextFormatting.WHITE));
 		}
 	}
 
